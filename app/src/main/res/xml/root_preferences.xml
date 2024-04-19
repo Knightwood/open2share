@@ -7,6 +7,7 @@
             android:layout_height="wrap_content"
             android:icon="@drawable/ic_baseline_help_24"
             android:key="guide"
+            android:fragment="top.linesoft.open2share.GuideFragment"
             android:title="@string/guide" />
         <!--            android:summary="本软件的使用说明"-->
 
@@ -22,6 +23,14 @@
             android:icon="@drawable/ic_baseline_healing_24"
             android:key="use_file_uri"
             android:title="@string/open_file_uri" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/baseline_save_as_24"
+            android:key="save_as"
+            android:summary="@string/save_as_summary"
+            android:title="@string/save_to_download"
+            />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/about">

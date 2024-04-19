@@ -20,4 +20,8 @@
     <string name="open_file_uri">兼容fileUri类型</string>
     <string name="open_file_uri_msg">android7以上，因为安全问题不提倡使用fileUri，因此，打开此选项将同意带来的安全风险</string>
     <string name="no_use_file_uri_msg">未允许打开fileUri兼容</string>
+    <string name="save_as">另存为</string>
+    <string name="no_use_save_as_msg" >未打开\"另存为\"</string>
+    <string name="save_to_download">保存到下载目录</string>
+    <string name="save_as_summary">打开后将自动保存到下载目录，否则每次都选择保存位置</string>
 </resources>

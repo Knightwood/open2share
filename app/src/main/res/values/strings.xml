@@ -17,6 +17,10 @@
     <string name="ok">OK</string>
     <string name="website">Website</string>
     <string name="open_file_uri">compatible fileUri types</string>
+    <string name="save_as">save as</string>
     <string name="open_file_uri_msg">Android 7 and above, because security issues do not discourage the use of fileUri, therefore, turning on this option will consent to the security risk it brings</string>
     <string name="no_use_file_uri_msg">FileUri is not turned on</string>
+    <string name="no_use_save_as_msg" >Save As is not turned on</string>
+    <string name="save_to_download">Save to download</string>
+    <string name="save_as_summary">Once opened, it will be automatically saved to the download directory, otherwise the save location will be selected every time</string>
 </resources>

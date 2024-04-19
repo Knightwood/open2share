@@ -41,6 +41,9 @@ public class BaseActivity extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(flags | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
+    }
+
+    private void setPadding(View root){
         //padding
         WindowInsetsCompat rootWindowInsets = ViewCompat.getRootWindowInsets(getWindow().getDecorView());
         Insets insets = Insets.NONE;

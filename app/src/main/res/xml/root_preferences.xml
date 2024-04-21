@@ -1,6 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory android:title="@string/help">
+    <PreferenceCategory android:title="@string/help"
+        app:isPreferenceVisible="false">
 
         <Preference
             android:layout_width="match_parent"
@@ -9,7 +10,6 @@
             android:key="guide"
             android:fragment="top.linesoft.open2share.GuideFragment"
             android:title="@string/guide" />
-        <!--            android:summary="本软件的使用说明"-->
 
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/settings">

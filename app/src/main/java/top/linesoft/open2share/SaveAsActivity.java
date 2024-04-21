@@ -69,10 +69,10 @@ public class SaveAsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 cardView.setVisibility(View.VISIBLE);
-                ObjectAnimator.ofFloat(cardView, "alpha", 0, 1).setDuration(500).start();
+                ObjectAnimator.ofFloat(cardView, "alpha", 0, 1).setDuration(200).start();
                 progressBar.show();
             }
-        }, 500);
+        }, 300);
 
         Intent intent = getIntent();
         List<Uri> uris = parseIntent(intent);
@@ -91,12 +91,12 @@ public class SaveAsActivity extends AppCompatActivity {
 
     /**
      * Parse the intent to get the URI List of the incoming data
-     *
-     * @param intent
-     * @return
      */
     private List<Uri> parseIntent(Intent intent) {
         ArrayList<Uri> list = new ArrayList<>();
+        if (intent.getAction() == null) {
+            return list;
+        }
         if (intent.getAction().equals(Intent.ACTION_SEND)) {
             Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             list.add(uri);
@@ -127,9 +127,9 @@ public class SaveAsActivity extends AppCompatActivity {
             executorService.submit(() -> {
                 try {
                     saveFileToDownloadFolder(uris.get(0), targetFolder);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Log.e(TAG, "save: error", e);
-                }finally {
+                } finally {
                     mHandler.post(this::finishAffinity);
                 }
             });
@@ -140,7 +140,7 @@ public class SaveAsActivity extends AppCompatActivity {
                     count.await();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
-                }finally {
+                } finally {
                     mHandler.post(this::finishAffinity);
                 }
             });
@@ -163,9 +163,9 @@ public class SaveAsActivity extends AppCompatActivity {
 
 
     @WorkerThread
-    private void saveFileToDownloadFolder(Uri inputUri, Uri targetFolder) throws Exception{
+    private void saveFileToDownloadFolder(Uri inputUri, Uri targetFolder) {
 
-        try (InputStream in = getContentResolver().openInputStream(inputUri);) {
+        try (InputStream in = getContentResolver().openInputStream(inputUri)) {
             DocumentFile documentFile = DocumentFile.fromSingleUri(this, inputUri);//input file
             Uri outUri = null;//input file output to here
             if (targetFolder != null) {

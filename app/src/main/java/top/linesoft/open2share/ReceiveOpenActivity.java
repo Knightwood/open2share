@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
@@ -14,34 +16,13 @@ import androidx.preference.PreferenceManager;
 public class ReceiveOpenActivity extends AppCompatActivity {
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        finishAffinity();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //Log.d("a","Activity 收到数据，执行Finish");
-        finish();
-
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boolean b = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("use_file_uri", false);
-
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        sendIntent.addCategory("android.intent.category.DEFAULT");
         Uri uri = getIntent().getData();
-        if (uri == null) {
+        if (uri == null || uri.getScheme() == null) {
             finish();
         } else {
-            //        Log.d("分享","Data："+ getIntent().getData().toString()+ uri.getScheme());
-//        Log.d("分享","Type："+ getIntent().getType());
             if (uri.getScheme().equals("file")) {
                 if (b) {
                     //API24以上系统分享支持file:///开头
@@ -53,11 +34,17 @@ public class ReceiveOpenActivity extends AppCompatActivity {
                     finishAffinity();
                 }
             }
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            sendIntent.addCategory("android.intent.category.DEFAULT");
             sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
             sendIntent.setType(getIntent().getType());
             sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivityForResult(Intent.createChooser(sendIntent, getString(R.string.share_title)), 1);
-            //finish();
+            ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    (ActivityResult o) -> finish());
+            launcher.launch(Intent.createChooser(sendIntent, getString(R.string.share_title)));
         }
 
 
